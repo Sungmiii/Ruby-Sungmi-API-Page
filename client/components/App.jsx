@@ -5,13 +5,15 @@ import TranslateWord from './TranslateWord'
 
 import { getTranslation } from '../maori_api'
 import Proverbs from './Proverbs'
+import ProverbTranslation from './ProverbTranslation'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       source: "",
-      translation: ""
+      translation: "",
+      showtranslation: ""
     }
     this.showTheProverbs = this.showTheProverbs.bind(this)
   }
@@ -30,13 +32,11 @@ class App extends React.Component {
   }
 
   // Needs to be called to show the proverb array/object
-  showTheProverbs(evt) {
-    evt.preventDefault()
-    getProverb(this.state)
-      .then(() => {
+  showTheProverbs(translation) {
+    getTranslation(translation)
+      .then((showtranslation) => {
         this.setState({
-          source: res.body.source,
-          translation: res.body.translation
+          showtranslation: showtranslation
         })
       })
   }
@@ -51,6 +51,7 @@ class App extends React.Component {
         <TranslateWord />
         <h2>Ruby &amp; Sungmi Proverb of the day</h2>
         {this.state.translation && <Proverbs showTheProverbs={this.showTheProverbs} translation={this.state.translation} source={this.state.source} />}
+        {this.state.showtranslation && <ProverbTranslation translation={this.state.translation} />}
       </div>
     )
   }
