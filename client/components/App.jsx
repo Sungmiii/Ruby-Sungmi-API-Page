@@ -33,6 +33,7 @@ class App extends React.Component {
 
   // Needs to be called to show the proverb array/object
   showTheProverbs(translation) {
+    console.log('showtheproverbs called')
     getTranslation(translation)
       .then((showtranslation) => {
         this.setState({
